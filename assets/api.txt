@@ -1,0 +1,63 @@
+
+src/
+├── modules/
+│   ├── tasks/
+│   │   ├── task.controller.ts
+│   │   ├── task.model.ts
+│   │   ├── task.routes.ts
+│   │   ├── task.service.ts
+│   │   ├── task.repository.ts
+│   │   ├── task.validator.ts
+│   │   └── task.types.ts
+│   │
+│   ├── auth/
+│   │   ├── auth.controller.ts
+│   │   ├── auth.routes.ts
+│   │   ├── auth.service.ts
+│   │   ├── auth.repository.ts
+│   │   └── auth.validator.ts
+│   │
+│   └── users/
+│       ├── user.controller.ts
+│       ├── user.model.ts
+│       ├── user.routes.ts
+│       ├── user.service.ts
+│       └── user.repository.ts
+│
+├── config/
+├── middleware/
+├── errors/
+├── utils/
+├── routes/
+├── app.ts
+└── server.ts
+
+
+
+
+src/
+├── modules/
+│   ├── users/
+│   │   ├── user.routes.ts
+│   │   ├── user.controller.ts
+│   │   ├── user.service.ts
+│   │   ├── user.repository.ts
+│   │   ├── user.model.ts
+│   │   ├── user.validator.ts
+│   │   └── user.types.ts
+│   │
+│   └── tasks/
+│       ├── task.routes.ts
+│       ├── task.controller.ts
+│       ├── task.service.ts
+│       ├── task.repository.ts
+│       ├── task.model.ts
+│       ├── task.validator.ts
+│       └── task.types.ts
+│
+├── routes/
+│   └── index.ts
+├── config/
+├── middleware/
+├── app.ts
+└── server.ts
