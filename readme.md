@@ -1,0 +1,2 @@
+# TyppScript Backend project
+### this is my first time where i build a rest api in Typescript and tried a different architecture kind of featers based / module base architecture and layered MVC Patterns
