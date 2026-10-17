@@ -1,14 +1,32 @@
-import { z} from 'zod';
+import { z } from "zod";
 
-const signupSchemaValidator = z.object({
- name:z.string().trim().min(2,"name should contain at least 2 character").max(100,"name must be less than 100 character"),
- email:z.string().trim().email("Please Provide valid email address").transform((email)=>email.toLowerCase()),
- password:z.string().min(6,"atleast minimum 2 character").max(50,"password should be at most 50 character"),
-})
-const loginSchemaValidator =z.object({
-  email:z.string().trim().email("Please Provide valid email address").transform((email)=>email.toLowerCase()),
- password:z.string().min(6,"atleast minimum 2 character").max(50,"password should be at most 50 character"),
-})
+const updateUserSchema = z
+  .object({
+    name: z
+      .string()
+      .trim()
+      .min(2, "Name must contain at least 2 characters")
+      .max(100, "Name cannot exceed 100 characters")
+      .optional(),
+
+    email: z
+      .string()
+      .trim()
+      .email("Please provide a valid email address")
+      .transform((email) => email.toLowerCase())
+      .optional(),
+    password: z
+      .string()
+      .min(8, "Password must contain at least 8 characters")
+      .max(50, "Password cannot exceed 50 characters"),
+  })
+  .refine((data) => data.name !== undefined || data.email !== undefined, {
+    message: "Provide at least one field to update",
+  });
+
+export { updateUserSchema };
+export type UpdateUserInput = z.infer<typeof updateUserSchema>;
 
 
-export {signupSchemaValidator,loginSchemaValidator}
+
+

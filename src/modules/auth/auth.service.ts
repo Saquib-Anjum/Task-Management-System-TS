@@ -2,22 +2,15 @@ import bcrypt from "bcrypt";
 import userModel from "../users/user.model.js";
 import type { LoginInput, SignupInput } from "./auth.validator.js";
 import generateToken from '../../utils/token.service.js'
-// Error class for handling expected authentication errors
-export class AuthServiceError extends Error {
-  constructor(
-    message: string,
-    public readonly statusCode: number,
-  ) {
-    super(message);
-    this.name = "AuthServiceError";
-  }
-}
+import AppError from "../../errors/app-error.js";
+
 
 // Safe user data returned to the client
 type AuthUser = {
   id: string;
   name: string;
   email: string;
+  token:string;
 };
 
 // Signup service
@@ -28,13 +21,13 @@ const signupService = async (data: SignupInput): Promise<AuthUser> => {
   const existingUser = await userModel.findOne({ email });
 
   if (existingUser) {
-    throw new AuthServiceError("Email is already registered", 409);
+   throw new AppError("Email is already registered",400)
+    
   }
 
 //password hash
   const hashedPassword = await bcrypt.hash(password, 12);
 
-  try {
     // Create the user in MongoDB
     const user = await userModel.create({
       name,
@@ -43,26 +36,15 @@ const signupService = async (data: SignupInput): Promise<AuthUser> => {
     });
 
     const token:string=generateToken({userId:user._id})
+    const userId:string = user._id.toString();
     return {
-      id: user._id,
+      id: userId,
       name: user.name,
       email: user.email,
-      token,
+      token:token
     };
-  } catch (error: unknown) {
-    // Handle duplicate email in case of concurrent signup requests
-    if (
-      typeof error === "object" &&
-      error !== null &&
-      "code" in error &&
-      error.code === 11000
-    ) {
-      throw new AuthServiceError("Email is already registered", 409);
-    }
-
-    // Let unexpected errors reach the error middleware
-    throw error;
-  }
+  
+    
 };
 
 // Login service
@@ -74,14 +56,14 @@ const loginService = async (data: LoginInput): Promise<AuthUser> => {
   const user = await userModel.findOne({ email });
 
   if (!user) {
-    throw new AuthServiceError("Invalid email or password", 401);
+   throw new AppError('User not found',404)
   }
 
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (!isPasswordValid) {
-    throw new AuthServiceError("Invalid email or password", 401);
+  throw new AppError("Invalid Credentials ",403)
   }
 const token:string=generateToken({userId:user._id})
 const userId =user._id.toString();
