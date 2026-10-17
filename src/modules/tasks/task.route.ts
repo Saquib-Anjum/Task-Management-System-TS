@@ -6,9 +6,9 @@ import { createTask, deleteTask, getTask, getTaskById, updateTask } from './task
 const taskRouter = Router();
 
 taskRouter.post('/create',protect,validate(taskInputValidator),createTask);
-taskRouter.put('/update/:id',protect,validate(updateTaskValidator),updateTask);
+taskRouter.put('/update/:taskId',protect,validate(updateTaskValidator),updateTask);
 taskRouter.get('/get',protect,getTask);
-taskRouter.get('/get/:id',protect, getTaskById);
-taskRouter.delete('/delete/:id',protect,deleteTask);
+taskRouter.get('/get/:taskId',protect, getTaskById);
+taskRouter.delete('/delete/:taskId',protect,deleteTask);
 
 export default taskRouter;

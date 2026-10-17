@@ -25,14 +25,13 @@ const taskSchema = new mongoose.Schema(
 
     date: {
       type: Date,
-      default: null,
+      default: Date.now(),
     },
 
     status: {
       type: String,
       enum: ["Completed", "Pending"],
       default: "Pending",
-      
     },
   },
   {

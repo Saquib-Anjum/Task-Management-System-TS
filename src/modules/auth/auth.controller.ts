@@ -11,6 +11,7 @@ const signup = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
+    console.log("api hitted")
     const user = await signupService(req.body);
 
     res.status(201).json({

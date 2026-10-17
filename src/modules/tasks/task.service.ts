@@ -26,7 +26,7 @@ const createTaskService = async (data: CreateTaskInput) => {
     userId,
     title,
     ...(description !== undefined && { description }),
-    ...(date !== undefined && { date: new Date(date) }),
+    ...(date !== undefined && { date: new Date(date) ||Date.now() }),
     status: status ?? "Pending",
   });
 
